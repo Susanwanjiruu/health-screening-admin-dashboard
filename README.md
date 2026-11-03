@@ -1,88 +1,157 @@
-# Compassion
+# Compassion Health Screening Platform — Admin Dashboard
 
-A health screening platform for children and beneficiaries in Compassion programs. Doctors and providers record screenings (malnutrition, immunization, vitamin A, deworming, HIV testing and more) from a mobile app, and administrators monitor providers and reports from a web dashboard.
+The Admin Dashboard is the web-based administration interface for the Compassion Health Screening Platform. It enables authorized Center Administrators to oversee healthcare facilities, providers, beneficiaries, clinical screenings, referrals, and annual reports.
 
-## Components
+The platform is maintained as three separate applications:
 
-| Component | Description | Stack |
-| --- | --- | --- |
-| `apps/admin-web` | Admin dashboard (this repo) | Next.js 16, React, TypeScript, Tailwind CSS |
-| Provider mobile app | Doctor login and screening forms (separate project) | Flutter |
-| Backend API | Auth, screening and reporting under `/api/v1` | TODO: framework |
+| Component | Repository | Technology | Responsibility |
+| --- | --- | --- | --- |
+| Admin Dashboard | [Health_screening_platform_admin_dashboard](https://github.com/Susanwanjiruu/Health_screening_platform_admin_dashboard) | Next.js 16, React 19, TypeScript, Tailwind CSS | Center Admin workflows |
+| Backend API | [Health_screening_platform_backend](https://github.com/Susanwanjiruu/Health_screening_platform_backend) | FastAPI, Python, SQLAlchemy | Authentication, authorization, business logic, clinical records, reporting, and AI-assisted report queries |
+| Doctor Mobile App | [Health_screening_platform_mobile](https://github.com/Susanwanjiruu/Health_screening_platform_mobile) | Flutter | Provider workflows and digital screening forms |
 
-## Admin Web
+The backend exposes its API under `/api/v1` and is shared by the web dashboard and mobile application.
 
-### Features
+## Features
 
-- Admin authentication: login, OTP verification, first-login password setup
-- Providers management
-- Reports on screening data, with an AI chat assistant
-- Settings
+The dashboard includes the following documented workflows:
 
-### Getting started
+- Administrator authentication, including OTP verification and first-login password setup.
+- Facility and provider administration.
+- Beneficiary management.
+- Clinical screening oversight.
+- Referral management.
+- Fiscal-year reporting and report exploration with an AI chat assistant.
+- Application settings.
 
-Prerequisites: Node.js 20+ and npm, and a running backend.
+Access to protected data and operations is enforced by the backend. Frontend route guards and hidden UI controls are not substitutes for server-side authorization.
+
+## Technology stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Lucide React icons
+
+## Project structure
+
+The web application lives in `apps/admin-web/`.
+
+```text
+apps/admin-web/
+├── app/          # Next.js App Router pages and layouts
+├── components/   # Shared dashboard and authentication components
+├── lib/
+│   ├── api/      # Backend API client and feature-specific API functions
+│   ├── auth/     # Authentication and session helpers
+│   └── utils/    # Shared utilities
+├── public/       # Static assets
+├── package.json
+└── .env.example  # Local environment variable template
+```
+
+## Prerequisites
+
+- Node.js 20 or later.
+- npm.
+- Access to a running instance of the [FastAPI backend](https://github.com/Susanwanjiruu/Health_screening_platform_backend).
+
+Use a Node.js version supported by the installed Next.js release.
+
+## Getting started
+
+Clone the repository and move into the web application directory:
 
 ```bash
-cd apps/admin-web
+git clone https://github.com/Susanwanjiruu/Health_screening_platform_admin_dashboard.git
+cd Health_screening_platform_admin_dashboard/apps/admin-web
+```
+
+Install dependencies:
+
+```bash
 npm install
+```
+
+Create your local environment file from the example:
+
+```bash
+cp .env.example .env.local
+```
+
+Update `.env.local` with the base URL of your running backend. Then start the development server:
+
+```bash
 npm run dev
 ```
 
-The app runs at http://localhost:3000.
+Open [http://localhost:3000](http://localhost:3000).
 
-### Environment variables
+## Environment configuration
 
-Create `apps/admin-web/.env.local` (never commit it):
+The API client reads the backend base URL from `NEXT_PUBLIC_API_BASE_URL`.
 
+| Variable | Purpose | Example |
+| --- | --- | --- |
+| `NEXT_PUBLIC_API_BASE_URL` | Base URL for the backend API, including the `/api/v1` prefix | `http://localhost:8000/api/v1` |
+
+Example:
+
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1
 ```
-# TODO: list variable names, e.g.
-# NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1
-```
 
-### Scripts
+This variable is prefixed with `NEXT_PUBLIC_`, so its value is exposed to browser-side code. It must contain only the API endpoint URL, never passwords, API keys, signing secrets, or other credentials.
 
-| Command | What it does |
+Keep `.env.local` out of version control. The committed `.env.example` should contain placeholder or local-development values only.
+
+## Available scripts
+
+Run these commands from `apps/admin-web/`:
+
+| Command | Description |
 | --- | --- |
-| `npm run dev` | Start the development server |
-| `npm run build` | Create a production build |
-| `npm run start` | Run the production build |
-| `npm run lint` | Lint the code |
+| `npm run dev` | Start the Next.js development server |
+| `npm run build` | Build the application for production |
+| `npm run start` | Start the production build |
+| `npm run lint` | Run ESLint |
 
-### Routes
+## Documented routes
 
 | Path | Purpose |
 | --- | --- |
-| `/` | Dashboard |
-| `/login` | Sign in |
+| `/` | Admin dashboard |
+| `/login` | Administrator sign-in |
 | `/login/verify` | OTP verification |
-| `/login/first-login` | First-time password setup |
-| `/providers` | Providers |
-| `/reports` | Reports and chat assistant |
-| `/settings` | Settings |
+| `/login/first-login` | First-login password setup |
+| `/providers` | Provider management |
+| `/reports` | Reports and AI chat assistant |
+| `/settings` | Application settings |
 
-### Project layout
+The backend API is the source of truth for permissions and data access. Refer to its interactive OpenAPI documentation when the backend is running:
 
-```
-apps/admin-web/
-├── app/          # Pages and routes
-├── components/   # Shared UI (auth guard, chatbot)
-├── lib/
-│   ├── api/      # Backend API clients
-│   └── auth/     # Session helpers
-└── public/       # Static assets
-```
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
 
-## Backend
+These are FastAPI's default documentation paths and may be changed by backend configuration.
 
-The API is served under `/api/v1`. Auth flow: `login-request` -> `login-verify-otp` -> `complete-first-login`.
+## Related project documentation
 
-TODO: backend repo link and how to run it.
+For backend installation, environment configuration, API contracts, authentication, roles, and business rules, see the [Backend API README](https://github.com/Susanwanjiruu/Health_screening_platform_backend).
 
-## Security note
+The Flutter application is maintained separately in the [Doctor Mobile repository](https://github.com/Susanwanjiruu/Health_screening_platform_mobile).
 
-This project handles sensitive health data. Never commit `.env` files, keys or real patient data.
+## Security and sensitive data
+
+This platform processes sensitive health and identity information.
+
+- Never commit `.env.local`, credentials, tokens, or private keys.
+- Do not store real patient or beneficiary data in test fixtures, screenshots, logs, or public documentation.
+- Keep AI provider credentials on the backend; do not expose them through Next.js public environment variables.
+- Use HTTPS and appropriately restricted origins in deployed environments.
+- Ensure backend authorization checks protect every sensitive operation.
 
 ## License
 
-TODO: add a license, or state that the project is private.
+No license has been specified in this repository. Unless a license is added, the source code should not be assumed to be available for reuse under an open-source license.
