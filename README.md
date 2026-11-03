@@ -53,7 +53,7 @@ apps/admin-web/
 
 ## Prerequisites
 
-- Node.js 20 or later.
+- Node.js 20.9 or later (required by the installed Next.js 16 release).
 - npm.
 - Access to a running instance of the [FastAPI backend](https://github.com/Susanwanjiruu/Health_screening_platform_backend).
 
