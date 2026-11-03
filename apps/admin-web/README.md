@@ -1,93 +1,106 @@
 # Compassion Health Screening Platform — Admin Dashboard
 
-The Admin Dashboard is the web application for managing the Compassion Health Screening Platform. Built with Next.js, it connects to a separate FastAPI backend to support administrative workflows for the Center.
+The Admin Dashboard is the web application for authorized Center Administrators to manage facilities, providers, beneficiaries, clinical screenings, referrals, and fiscal-year reports. It is built with Next.js and communicates with the platform's separate FastAPI backend.
 
 ## Features
 
-- Admin authentication using email, password, and OTP verification.
-- Hospital registration and management.
-- Doctor/Provider account management.
-- Beneficiary management.
-- Clinical screening record management.
-- Referral case management.
-- Center profile management.
-- Screening reports and exports.
+- Administrator sign-in with email, password, and OTP verification.
+- First-login password setup and password reset flows.
+- Facility and provider administration.
+- Beneficiary and screening oversight.
+- Referral management.
+- Fiscal-year reports and report exports.
+- Report question-and-answer interface.
 
-*Ensure this list matches the functionality currently implemented in the dashboard.*
+The backend is responsible for authentication, authorization, and access to protected data. Frontend route guards are an additional user-interface check, not a replacement for backend authorization.
 
-## Technology Stack
+## Technology
 
-- Next.js
-- React
-- FastAPI backend
-- API integration configured through environment variables
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Lucide React
 
-## Getting Started
+## Prerequisites
 
-### Prerequisites
+- Node.js 20.9 or later.
+- npm.
+- A running instance of the [FastAPI backend](https://github.com/Susanwanjiruu/Health_screening_platform_backend).
 
-- Node.js
-- npm
-- Access to the FastAPI backend
+## Getting started
 
-### Installation
+Run these commands from the `apps/admin-web/` directory:
 
 ```bash
 npm install
+cp .env.example .env.local
 ```
 
-### Environment Configuration
-
-Create a `.env.local` file in the project root and configure the backend API URL.
+Edit `.env.local` and set the backend API URL:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1
 ```
 
-`NEXT_PUBLIC_API_URL` is an example variable name. Replace it with the exact variable your application uses. The example URL assumes the backend runs locally on port `8000` under `/api/v1`.
-
-### Run the Development Server
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
-Ensure the FastAPI backend is running and accessible at the configured API URL.
+Ensure the backend is running and reachable at the configured URL.
 
-## Backend Integration
+## Environment configuration
 
-The dashboard communicates with the FastAPI backend for authentication, authorization, and administrative operations.
+| Variable | Purpose | Example |
+| --- | --- | --- |
+| `NEXT_PUBLIC_API_BASE_URL` | Backend API base URL, including the `/api/v1` prefix | `http://localhost:8000/api/v1` |
 
-Admin authentication uses email/password credentials followed by OTP verification. Protected operations must be authorized by the backend.
+**Important:** Next.js exposes variables prefixed with `NEXT_PUBLIC_` to browser-side code. This variable must contain only the API endpoint URL. Never place passwords, API keys, tokens, or signing secrets in it.
 
-## Development Commands
+Keep `.env.local` out of version control. The committed `.env.example` contains a local-development example only.
 
-```bash
-npm run dev
-npm run build
-npm run start
-```
+## Available scripts
 
-These commands assume the corresponding scripts are configured in `package.json`.
+Run from `apps/admin-web/`:
 
-## Deployment
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Build the production application |
+| `npm run start` | Start the production server |
+| `npm run lint` | Run ESLint |
 
-The dashboard currently runs locally. Production hosting and deployment instructions will be documented once the deployment platform is selected.
+## Main routes
 
-## Related Applications
+| Route | Purpose |
+| --- | --- |
+| `/` | Admin dashboard |
+| `/login` | Administrator sign-in |
+| `/login/verify` | OTP verification |
+| `/login/first-login` | First-login password setup |
+| `/login/forgot-password` | Request a password reset |
+| `/login/reset-password` | Reset password |
+| `/providers` | Provider management |
+| `/reports` | Reporting and report assistant |
+| `/settings` | Application settings |
 
-The Compassion Health Screening Platform consists of:
+The backend API is the source of truth for permissions and data access. When the backend is running, its API documentation may be available at `http://localhost:8000/docs` and `http://localhost:8000/redoc`, depending on backend configuration.
 
-- **Admin Dashboard:** Next.js web application.
-- **Doctor Mobile App:** Flutter mobile application.
-- **Backend API:** FastAPI service.
+## Security notes
 
-Each component is maintained in a separate repository.
+This platform handles sensitive health and identity information.
 
-## Resources
+- Never commit local environment files, credentials, access tokens, or private keys.
+- Do not use real patient or beneficiary information in test fixtures, screenshots, logs, or public documentation.
+- Keep AI provider credentials on the backend; do not expose them through public Next.js environment variables.
+- Use HTTPS and appropriately restricted origins in deployed environments.
+- Enforce authorization on every protected backend endpoint. A frontend route guard alone is not sufficient.
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [React Documentation](https://react.dev/)
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+## Related repositories
+
+- [FastAPI Backend](https://github.com/Susanwanjiruu/Health_screening_platform_backend)
+- [Doctor Mobile App](https://github.com/Susanwanjiruu/Health_screening_platform_mobile)
