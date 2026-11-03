@@ -1,6 +1,6 @@
 # Compassion Health Screening Platform — Admin Dashboard
 
-The Admin Dashboard is the web-based administration interface for the Compassion Health Screening Platform. It enables authorized Center Administrators to oversee healthcare facilities, providers, beneficiaries, clinical screenings, referrals, and annual reports.
+A Next.js admin dashboard for managing healthcare facilities, beneficiaries, clinical screenings, referrals, and reports.
 
 The platform is maintained as three separate applications:
 
