@@ -6,7 +6,7 @@ The platform is maintained as three separate applications:
 
 | Component | Repository | Technology | Responsibility |
 | --- | --- | --- | --- |
-| Admin Dashboard | [Health_screening_platform_admin_dashboard](https://github.com/Susanwanjiruu/Health_screening_platform_admin_dashboard) | Next.js 16, React 19, TypeScript, Tailwind CSS | Center Admin workflows |
+| Admin Dashboard | [health-screening-admin-dashboard](https://github.com/Susanwanjiruu/health-screening-admin-dashboard) | Next.js 16, React 19, TypeScript, Tailwind CSS | Center Admin workflows |
 | Backend API | [Health_screening_platform_backend](https://github.com/Susanwanjiruu/Health_screening_platform_backend) | FastAPI, Python, SQLAlchemy | Authentication, authorization, business logic, clinical records, reporting, and AI-assisted report queries |
 | Doctor Mobile App | [Health_screening_platform_mobile](https://github.com/Susanwanjiruu/Health_screening_platform_mobile) | Flutter | Provider workflows and digital screening forms |
 
@@ -64,7 +64,7 @@ Use a Node.js version supported by the installed Next.js release.
 Clone the repository and move into the web application directory:
 
 ```bash
-git clone https://github.com/Susanwanjiruu/Health_screening_platform_admin_dashboard.git
+git clone https://github.com/Susanwanjiruu/health-screening-admin-dashboard.git
 cd Health_screening_platform_admin_dashboard/apps/admin-web
 ```
 
