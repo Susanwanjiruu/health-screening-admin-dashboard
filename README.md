@@ -65,7 +65,7 @@ Clone the repository and move into the web application directory:
 
 ```bash
 git clone https://github.com/Susanwanjiruu/health-screening-admin-dashboard.git
-cd Health_screening_platform_admin_dashboard/apps/admin-web
+cd health-screening-admin-dashboard/apps/admin-web
 ```
 
 Install dependencies:
